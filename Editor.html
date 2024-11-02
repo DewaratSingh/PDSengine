@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<style type="text/css">
+*
+	{
+	margin:0px;
+	}
+body
+	{
+	background-color:rgb(62, 63, 68);
+	}
+canvas 
+	{
+	position:fixed;
+	top:50px;
+	background-color:green;
+	}
+.dfjcac
+	{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	}
+.tool
+	{
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:50px;
+	border-bottom:1px solid white;
+	}
+.tool div
+	{
+	font-size:10px;
+	height:45px;
+	width:45px;
+	background-color:grey;
+	margin:10px;
+	border-radius:5px;
+	}
+#colorChoos,#shape,#setting,#exports,#object
+	{
+	height:0px;
+	overflow:hidden;
+	width:150px;
+	background-color:rgba(62,63,68,1);
+	border-radius:0px;
+	margin:2px 15px;
+	text-align:center;
+	transition-duration:0.2s;
+	position:relative;
+	top:0.5px;
+	left:-75px;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	}
+
+span 
+	{
+	font-size:17px;
+	color:white;
+	}
+#setting
+	{
+	color:white;
+	}
+#range 
+	{
+	position:fixed;
+	bottom:0px;
+	left:50%;
+	transform:translate(-50%);
+	width:100%;
+	max-width:300px;
+	height:0px;
+	transition-duration:0.2s;
+	background-color:rgba(225,225,225,0.3);
+	overflow-y:scroll;
+	}
+input 
+	{
+	width:90%;
+	max-width:500px;
+	}
+.dn
+	{
+	display:none;
+	}
+.inputWidth
+	{
+	width:100px;
+	}
+#Coad,#files
+	{
+	margin:0px;
+	height:150px;
+	width:150px;
+	overflow:scroll;
+	color:white;
+	text-align:left;
+	}
+#files 
+	{
+	width:250px;
+	text-align:center;
+	}
+#object
+	{
+	position:relative;
+	top:0.5px;
+	left:-30px;
+	width:250px;
+	text-align:center;
+	}
+#img
+	{
+	padding:4px;
+	margin:1px;
+	height:100px;
+	width:100px;
+	background-color:black;
+	overflow:hidden;
+	display:inline-block;
+	}
+#cross
+	{
+	height:20px;
+	width:20px;
+	position:relative;
+	top:-120px;
+	left:75px;
+	color:white;
+	background-color:black;
+	border-radius:50%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	}
+#imgSrc
+	{
+	position:relative;
+	top:0px;
+	left:0px;
+	}
+	
+	
+@media only screen and (min-width: 501px) {
+#range
+	{
+	position:fixed;
+	left:100%;
+	transform:translate(-50%);
+	}
+}
+
+
+</style>
+<body>
+<canvas id="Canvas" ></canvas>
+
+<div class="tool dfjcac " >
+
+<div onclick="Option(object)">
+<div class="dfjcac" style="margin:0px" >Object</div>
+<div id="object" onclick="offClick()" >
+<input type="file" oninput="inputFile(this); ">
+<div id="files" ></div>
+</div>
+</div>
+
+<div onclick="Option(exports)">
+<div class="dfjcac" style="margin:0px" >Export</div>
+<div id="exports" onclick="offClick()">
+<button onclick="Download()">Download</button>
+<button onclick="Copy()">CopyCoad</button>
+<div id="Coad"></div>
+</div>
+</div>
+
+<div onclick="Option(shape)">
+<div class="dfjcac" style="margin:0px ">Add</div>
+<div id="shape" class="boxes"  onclick="offClick()" >
+<span onclick="addObj('Circle')">Circle</span><hr>
+<span onclick="addObj('Rectangle')">Rectangle</span><hr>
+<span onclick="addObj('Road')">Road</span><hr>
+<span onclick="addObj('Polygon')">Polygon</span><hr>
+<span onclick="addObj('Image')">Image</span><hr>
+<span onclick="addObj('Delete')">Delete</span>
+</div>
+</div>
+
+<div onclick="Option(colorChoos)" style="background-color:white;"  >
+<div class="dfjcac" id="colorBox" style="margin:0px;background-color:rgba(15,165,254,1);"  >color</div>
+<div id="colorChoos" onclick="offClick()">
+	<input id="color" style="width:100px;color:white" type="text" placeholder="Color" value="rgba(15,165,254,1)"  >
+	<input id="red" style="accent-color:red;" type="range" min="0" max="255" value="62" >
+	<input id="green" style="accent-color:green;" type="range" min="0" max="255" value="63" >
+	<input id="blue" style="accent-color:blue;" type="range" min="0" max="255" value="68" >
+	<input id="opacity" style="accent-color:grey;" type="range" min="0" max="10" value="10" >
+</div>
+</div>
+
+<div onclick="Option(setting)" >
+<div class="dfjcac" style="margin:0px" >Setting</div>
+<div id="setting" onclick="offClick()" >
+BackGroundColor:<input oninput="canvas.style.backgroundColor=this.value" type="color">
+BackGroundColor:<input oninput="canvas.style.backgroundColor=this.value">
+<hr>
+<button onclick="fullScreen()">FullScreen</button>
+</div>
+</div>
+
+</div>
+
+<div id="range" ></div>
+
+
+
+<!--<script type="text/javascript" src="file:///sdcard/Map/eruda.js"></script>-->
+<script type="text/javascript" src="./Zip.js"></script>
+<script type="text/javascript" src="./Roadsegment.js"></script>
+<script type="text/javascript" src="./circle.js"></script>
+<script type="text/javascript" src="./imgObj.js"></script>
+<script type="text/javascript" src="./rectangle.js"></script>
+<script type="text/javascript" src="./Polygon.js"></script>
+<script type="text/javascript" src="./script.js"></script>
+<script type="text/javascript">
+//eruda.init();
+//-----------------Initial Variables------------------------------------
+let canvas=document.getElementById("Canvas")
+let ctx=canvas.getContext('2d');
+canvas.height=697-160
+canvas.width=360
+let ani=true;
+
+//-----------------Object Property------------------------------------
+let offSet={x:0,y:0,range:{xFrom:-200,xTo:700,yFrom:-200,yTo:700}};
+let circle=[]
+let rect=[]
+let road=[[],[],[],100]
+let image=[]
+let polygon=[]
+let collide=false
+let name=""
+let Allimage=[]
+
+//-----------------FullScreen------------------------------------
+function
+fullScreen(){
+document.documentElement.requestFullscreen().catch((e) => {alert(e)});
+}
+
+
+//-----------------Canvas Click------------------------------------
+let intCod=[]
+canvas.addEventListener("click",(e)=>{
+let x=e.clientX
+let y=e.clientY-50
+
+if(ani){
+
+switch(Drawitem){
+case "Road":
+if(road[0].length!=0){
+let distance=[]
+road[0].forEach((point,i) => {
+distance.push(dist(x,y,point.x,point.y))
+})
+let minDist=Math.min(...distance)
+if(minDist<road[3]*5){
+let indexOfMin=distance.indexOf(minDist)
+road[1].push({from:indexOfMin,to:road[0].length})
+}
+}
+road[0].push(new Circle(x+offSet.x,y+offSet.y,road[3]/2,"grey"))
+
+for(let i=0;i<road[0].length;i++){
+switch(countNumberOccurrences(road[1],i))
+{
+case 3:
+road[2].push(new Circle(road[0][i].x+offSet.x,road[0][i].y+offSet.y,road[3]/2,"grey"))
+road[2].push(new Circle(road[0][i].x+offSet.x,road[0][i].y+offSet.y,road[3]/8,"yellow"))
+}
+}
+break;
+case "Polygon":
+let X=canvas.width/2+offSet.x
+let Y=canvas.height/2+offSet.y
+if(polygon[polygon.length-1].data==""){
+intCod[0]=[X,Y]
+}
+polygon[polygon.length-1].data.push({x:X,y:Y})
+break;
+case "Delete":
+removeFromArrey(x,y)
+Dele()
+break;
+case "Connect":
+console.log(JSON.stringify(road))
+connectRoad(x,y)
+break;
+}
+addObjInArrey(false)
+}
+})
+
+
+//-----------------Initiation Of Object------------------------------------
+let seg=new RoadSegment(road[3],"grey")
+let divider=new RoadSegment(2,"white",[20,20])
+let cir=new Circle(canvas.width/2,canvas.height/2,10,"rgb(15,165,254)")
+let rectangle=new Rect(canvas.width/2,canvas.height/2,"rgb(15,165,254)",100,100)
+let imageObj=new ImgObj(canvas.width/2,canvas.height/2,"file:///sdcard/Pds_engin/Logo.png",100,100)
+
+//-----------------Animation------------------------------------
+animation()
+function
+animation()
+{
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+road[0].forEach((point) => {
+point.draw(ctx,offSet)
+})
+seg.draw(ctx,road[1],road[0],offSet)
+divider.draw(ctx,road[1],road[0],offSet)
+road[2].forEach((street) => {
+street.draw(ctx,offSet)
+})
+circle.forEach((point) => {
+point.draw(ctx,offSet)
+})
+rect.forEach((point) => {
+point.draw(ctx,offSet)
+})
+image.forEach((point) => {
+point.draw(ctx,offSet)
+})
+polygon.forEach((point) => {
+point.draw(ctx,offSet)
+})
+draw()
+
+if(ani){
+requestAnimationFrame(animation)
+}
+}
+
+
+
+//-----------------Draw Initial Object------------------------------------
+function
+draw()
+{
+switch(Drawitem){
+case "Circle":
+cir.r=radi;
+cir.color=color.value;
+cir.draw(ctx,offSet,true)
+break;
+case "Road":
+road[3]=roadWidth
+seg.width=roadWidth
+break;
+case "Rectangle":
+rectangle.color=color.value
+rectangle.height=height
+rectangle.width=width
+rectangle.angle=rotate*Math.PI/180
+rectangle.draw(ctx,offSet,true)
+break;
+case "Image":
+imageObj.data=[src]
+imageObj.Img.height=height
+imageObj.Img.width=width
+imageObj.angle=rotate*Math.PI/180
+imageObj.draw(ctx,offSet,true)
+break;
+case "Polygon":
+ctx.beginPath()
+ctx.fillStyle="white"
+ctx.textAlign="center"
+ctx.textBaseline="middle"
+ctx.font="bold 20px Arial"
+ctx.fillText("+",canvas.width/2,canvas.height/2)
+break;
+case "Delete":
+deleteCir.forEach((point) => {
+if(point!="Deleted"){
+point.draw(ctx,offSet)
+}
+})
+break;
+case "Connect":
+deleteCir.forEach((point) => {
+point.draw(ctx,offSet)
+})
+break;
+}
+}
+
+//-----------------Add Object In Arrey------------------------------------
+function
+addObjInArrey(poly)
+{
+switch(Drawitem){
+case "Circle":
+circle.push(new Circle(canvas.width/2+offSet.x,canvas.height/2+offSet.y,radi,color.value,collide,name))
+break;
+case "Rectangle":
+rect.push(new Rect(canvas.width/2+offSet.x,canvas.height/2+offSet.y,color.value,width,height,rotate*Math.PI/180,collide,name))
+break;
+case "Image":
+image.push(new ImgObj(canvas.width/2+offSet.x,canvas.height/2+offSet.y,src,width,height,rotate*Math.PI/180,collide,name))
+break;
+case "Polygon":
+if(poly){
+if(done.innerHTML=="closePath"){
+polygon[polygon.length-1].closePath=true
+polygon[polygon.length-1].collide=collide
+polygon[polygon.length-1].name=name
+done.innerHTML="Off"
+}else{
+polygon[polygon.length-1].closePath=false
+done.innerHTML="closePath"
+}
+}
+break;
+}
+}
+
+//---------------Undo for Polygon Object------------------------------------
+function
+Undo()
+{
+let length=polygon[polygon.length-1].data.length-1
+polygon[polygon.length-1].data.splice(length,1)
+}
+
+
+//-----------------Creating Movement For Canvas------------------------------------
+
+let X, Y, store = [0, 0];
+canvas.addEventListener("touchstart", (e) => {
+X = e.touches[0].clientX;
+Y = e.touches[0].clientY;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+let Xm = e.touches[0].clientX;
+let Ym = e.touches[0].clientY;
+if(ani){
+offSet.x = X - Xm + store[0];
+offSet.y = Y - Ym + store[1];
+}
+});
+
+canvas.addEventListener("touchend", (e) => {
+if (e.changedTouches.length > 0) {
+let Xe = e.changedTouches[0].clientX;
+let Ye = e.changedTouches[0].clientY;
+if(ani){
+
+store[0] = offSet.x;
+store[1] = offSet.y;
+}
+}
+});
+
+//-----------------Connecting road Object------------------------------------
+let click=0
+let indexs=[];
+function
+connectRoad(x,y)
+{
+for(let i=0;i<road[0].length;i++){
+distance=dist(x,y,road[0][i].x,road[0][i].y)
+if(distance<30){
+indexs.push(i)
+deleteCir.push(new Circle(road[0][i].x+offSet.x,road[0][i].y+offSet.y,30,"yellow"))
+click++
+break;
+}else{
+index= -1
+}
+}
+if(click==2){
+click=0
+road[1].push({from:indexs[0],to:indexs[1]})
+indexs=[]
+}
+
+}
+
+//-----------------Deleting Object------------------------------------
+function
+removeFromArrey(x,y)
+{
+let index= -1;
+for(let i=0;i<circle.length;i++){
+distance=dist(x,y,circle[i].x,circle[i].y)
+if(distance<30){
+index=i
+break;
+}else{
+index= -1
+}
+}
+if(index!= -1){
+circle.splice(index, 1);
+}
+
+for(let i=0;i<rect.length;i++){
+distance=dist(x,y,rect[i].x,rect[i].y)
+if(distance<30){
+index=i
+break;
+}else{
+index= -1
+}
+}
+if(index!= -1){
+rect.splice(index, 1);
+}
+
+for(let i=0;i<image.length;i++){
+distance=dist(x,y,image[i].x,image[i].y)
+if(distance<30){
+index=i
+break;
+}else{
+index= -1
+}
+}
+if(index!= -1){
+image.splice(index, 1);
+}
+
+}
+
+
+//-----------------other------------------------------------
+function 
+countNumberOccurrences(array,number){
+return array.reduce((count, obj) => {
+return count + (obj.from === number ? 1 : 0) + (obj.to === number ? 1 : 0);
+}, 0);
+}
+
+function
+dist(x,y,x1,y1)
+{
+return Math.sqrt((x-x1)*(x-x1)+(y-y1)*(y-y1));
+}
+
+
+
+</script>
+</body>
+</html>
