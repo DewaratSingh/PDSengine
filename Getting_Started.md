@@ -1,8 +1,4 @@
-<html>
-<head>
-    <title>Game Engine Setup Guide</title>
-</head>
-<body>
+
 
     <h1>Getting Started with PDS Engine</h1>
     <p>Follow the steps below to set up and start using <b>PDS Engine</b>.</p>
@@ -93,6 +89,3 @@
         <li>Open Chrome and navigate to <code>http://127.0.0.1:8080/</code> to see your game with the loaded map.</li>
         <li>Your game map should now be visible, and you can start interacting with it.</li>
     </ol>
-
-</body>
-</html>
