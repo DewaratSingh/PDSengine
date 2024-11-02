@@ -69,8 +69,21 @@ Follow the steps below to set up and start using **PDS Engine**.
     ```
 
     Make sure the path to `map.js` is correct to avoid loading issues.
+## 6. Downloading and Importing Your Map
+11. Download and install `cdn.zip`, then extract its contents.
+12. Connect all files in the `cdn` folder to your simple website by adding the following lines inside the `<head>` section or before your main script:
 
-## 6. Viewing Your Game Map
+    ```html
+    <script type="text/javascript" src="./cdn/Vector.js"></script>
+    <script type="text/javascript" src="./cdn/circle.js"></script>
+    <script type="text/javascript" src="./cdn/imgObj.js"></script>
+    <script type="text/javascript" src="./cdn/rectangle.js"></script>
+    <script type="text/javascript" src="./cdn/polygon.js"></script>
+    <script type="text/javascript" src="./road.js"></script>
+    ```
+Make sure the path is correct to avoid loading issues.
+
+## 7. Viewing Your Game Map
 14. Stop the server for _PDSengine_ and select the folder where your game website files are saved (including `map.js` and your main HTML file).
 15. Start the server again with this new game folder.
 16. Open Chrome and navigate to `http://127.0.0.1:8080/` to see your game with the loaded map.
