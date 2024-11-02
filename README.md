@@ -1,5 +1,5 @@
 Welcome to PDSengine ,<br><br>
- a simple and powerful tool for making 2D games with JavaScript. This engine is designed to help you create games quickly and easily, whether you want to launch them as mobile apps or as games on the web.
+A simple and powerful tool for making 2D games with JavaScript. This engine is designed to help you create games quickly and easily, whether you want to launch them as mobile apps or as games on the web.
 <b><br><br>
 Main Feature:</b><br>
 Make game with javascript : Build your games using JavaScript, which is easy to learn and works well with web technology.
