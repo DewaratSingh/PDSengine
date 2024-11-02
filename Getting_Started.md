@@ -79,7 +79,7 @@ Follow the steps below to set up and start using **PDS Engine**.
     <script type="text/javascript" src="./cdn/imgObj.js"></script>
     <script type="text/javascript" src="./cdn/rectangle.js"></script>
     <script type="text/javascript" src="./cdn/polygon.js"></script>
-    <script type="text/javascript" src="./road.js"></script>
+    <script type="text/javascript" src="./cdn/road.js"></script>
     ```
 Make sure the path is correct to avoid loading issues.
 
